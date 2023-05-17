@@ -5,36 +5,25 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField]
-    private bool MyUnit;
+    public bool MyUnit;
 
     [SerializeField]
     private Position pos;
 
-    [SerializeField]
-    private State state;
-
     [Header("Status")]
     public int hp;
     public int damage;
-    public float speed;
-
-    [Range(.1f, 20f)]
-    public float seeingDis = 1f;
-
-    [Range(.1f, 10f)]
-    public float distance = 1f;
 
     public float delay;
     public float firstDelay;
     public float lastDelay;
 
-    private GameObject _Nexus;
-    //private Nexus nex;
-    private Transform Target;
-    private Transform targetTemp;
+    [Range(.1f, 10f)]
+    public float distance = 1f;
 
-    private NavMeshAgent agent;
+    private GameObject targetNexus;
+    private Transform target;
+    private Transform tempTarget;
 
     public enum Position
     {
@@ -42,54 +31,26 @@ public class Unit : MonoBehaviour
         Air
     }
 
-    public enum State
-    {
-        Character,
-        Building
-    }
-
-    public bool IsEnemy => !MyUnit;
     public Position Pos => pos;
 
     void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = speed;
-        _Nexus = GameObject.Find(MyUnit ? "MyNexus" : "RivalNexus");
-        Target = _Nexus.transform;
-
-        targetTemp = Target;
-
-        if (state == State.Building)
-            speed = 0f;
+        targetNexus = GameObject.Find(MyUnit ? "RivalNexus" : "MyNexus");
+        target = targetNexus.transform;
+        tempTarget = target;
     }
 
-    void FixedUpdate()
+    public Vector3 Target
     {
-        agent.destination = SeeingUnit() ?? Target.position;
-    }
-
-    Vector3? SeeingUnit()
-    {
-        Vector3? r = null;
-        float minDis = seeingDis;
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, seeingDis);
-        foreach (Collider collider in colliders)
+        get
         {
-            if (collider.gameObject.CompareTag("Ground"))
-                return null;
-
-            Vector3 pos = collider.transform.position;
-            float dis = Vector3.Distance(transform.position, pos);
-
-            if (minDis > dis)
-            {
-                minDis = dis;
-                r = pos;
-            }
+            return targetNexus.transform.position;
+            //이게 왜 null인데?!?!?!?!?!?!
         }
+    }
 
-        return r;
+    public virtual Vector3? SeeingUnit()
+    {
+        return target.position;
     }
 }

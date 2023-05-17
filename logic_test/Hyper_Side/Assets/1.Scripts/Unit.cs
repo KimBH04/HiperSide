@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,12 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
-    public bool MyUnit;
-
     [SerializeField]
-    private Position pos;
+    private Army army;
+    [SerializeField]
+    private State state;
+    [SerializeField]
+    private State targetting;
 
     [Header("Status")]
     public int hp;
@@ -25,32 +28,63 @@ public class Unit : MonoBehaviour
     private Transform target;
     private Transform tempTarget;
 
-    public enum Position
+    // 선언 시 입력되는 숫자에 따라 타겟팅이 됩니다.
+    // 예시 :
+    // 5 = Buliding + Ground; 지상에 있는 유닛이면 모두 타겟팅 됩니다.
+    // 15 = Buliding + Character + Ground + Air; 필드에 있는 모든 유닛이 타겟팅 됩니다.
+    //
+    // 또는 유닛의 상태에 대해서도 선인이 가능합니다.
+    // 예시 :
+    // 10 = Character + Ground; 지상 유닛 입니다.
+    // 사용할 수 없는 값을 입력한 경우 예기지 못한 오류가 생길 수 있습니다.
+    [Flags]
+    public enum State
     {
-        Gound,
-        Air
+        Building = 1,
+        Character = 2,
+        Ground = 4,
+        Air = 8
     }
 
-    public Position Pos => pos;
-
-    void Awake()
+    public enum Army
     {
-        targetNexus = GameObject.Find(MyUnit ? "RivalNexus" : "MyNexus");
+        Ally,
+        Enemy,
+        MidNexus
+    }
+
+    public State Sta => state;
+    public Army Arm => army;
+
+    public void Init()
+    {
+        if (army == Army.Ally)
+        {
+            targetNexus = GameObject.Find("RivalNexus");
+        }
+        else if (army == Army.Enemy)
+        {
+            targetNexus = GameObject.Find("MyNexus");
+        }
+        else
+        {
+
+        }
+
         target = targetNexus.transform;
         tempTarget = target;
     }
 
-    public Vector3 Target
+    public Vector3 TargetPosition
     {
         get
         {
-            return targetNexus.transform.position;
-            //이게 왜 null인데?!?!?!?!?!?!
+            return target.position;
         }
     }
 
     public virtual Vector3? SeeingUnit()
     {
-        return target.position;
+        return null;
     }
 }

@@ -5,22 +5,25 @@ using UnityEngine.AI;
 
 public class Character : Unit
 {
-    public float speed;
-
     [Range(.1f, 20f)]
     public float seeingDis = 1f;
+
+    public float speed;
 
     private NavMeshAgent agent;
 
     void Awake()
     {
+        Init();
+
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
+        agent.stoppingDistance = distance;
     }
 
     void FixedUpdate()
     {
-        agent.destination = SeeingUnit() ?? Target;
+        agent.destination = SeeingUnit() ?? TargetPosition;
     }
 
     public override Vector3? SeeingUnit()
@@ -33,7 +36,7 @@ public class Character : Unit
         {
             if (collider.CompareTag("Ground") ||
                 collider.gameObject == gameObject ||
-                collider.GetComponent<Unit>().MyUnit == MyUnit ||
+                collider.GetComponent<Unit>().Sta == base.Sta ||
                 collider.gameObject.name.Equals("MyNexus"))
                 continue;
 

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Building : Unit
 {
+    public float lifeTime = 10f;
+
     void Awake()
     {
-        
+        Init();
     }
 
     void FixedUpdate()
@@ -24,7 +26,7 @@ public class Building : Unit
         {
             if (collider.CompareTag("Ground") ||
                 collider.gameObject == gameObject ||
-                collider.GetComponent<Unit>().MyUnit == MyUnit ||
+                collider.GetComponent<Unit>().Sta == base.Sta ||
                 collider.gameObject.name.Equals("MyNexus"))
                 continue;
 

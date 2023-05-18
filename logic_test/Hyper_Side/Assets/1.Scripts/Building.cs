@@ -6,7 +6,7 @@ public class Building : Unit
 {
     public float lifeTime = 10f;
 
-    void Awake()
+    public void Awake()
     {
         Init();
     }

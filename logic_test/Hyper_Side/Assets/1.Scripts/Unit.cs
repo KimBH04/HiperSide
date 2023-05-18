@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,9 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private State state;
     [SerializeField]
-    private State targetting;
+    protected State targetting;
+    // protected : ì™¸ë¶€ í´ë˜ìŠ¤ì—ì„œ ì ‘ê·¼í•  ìˆ˜ ì—†ì§€ë§Œ
+    // ìƒì†ë°›ì€ ìì‹ í´ë˜ìŠ¤ì—ì„  ì ‘ê·¼í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
     [Header("Status")]
     public int hp;
@@ -24,19 +26,19 @@ public class Unit : MonoBehaviour
     [Range(.1f, 10f)]
     public float distance = 1f;
 
-    private GameObject targetNexus;
+    protected GameObject targetNexus;
     private Transform target;
     private Transform tempTarget;
 
-    // ¼±¾ğ ½Ã ÀÔ·ÂµÇ´Â ¼ıÀÚ¿¡ µû¶ó Å¸°ÙÆÃÀÌ µË´Ï´Ù.
-    // ¿¹½Ã :
-    // 5 = Buliding + Ground; Áö»ó¿¡ ÀÖ´Â À¯´ÖÀÌ¸é ¸ğµÎ Å¸°ÙÆÃ µË´Ï´Ù.
-    // 15 = Buliding + Character + Ground + Air; ÇÊµå¿¡ ÀÖ´Â ¸ğµç À¯´ÖÀÌ Å¸°ÙÆÃ µË´Ï´Ù.
+    // ì„ ì–¸ ì‹œ ì…ë ¥ë˜ëŠ” ìˆ«ì ë˜ëŠ” ì¸ìŠ¤í™í„°ì—ì„œ ì²´í¬í•œ ê°’ì— ë”°ë¼ íƒ€ê²ŸíŒ…ì´ ë©ë‹ˆë‹¤.
+    // ì˜ˆì‹œ :
+    // 5 = Buliding + Ground; ì§€ìƒì— ìˆëŠ” ìœ ë‹›ì´ë©´ ëª¨ë‘ íƒ€ê²ŸíŒ… ë©ë‹ˆë‹¤.
+    // 15 = Buliding + Character + Ground + Air; í•„ë“œì— ìˆëŠ” ëª¨ë“  ìœ ë‹›ì´ íƒ€ê²ŸíŒ… ë©ë‹ˆë‹¤.
     //
-    // ¶Ç´Â À¯´ÖÀÇ »óÅÂ¿¡ ´ëÇØ¼­µµ ¼±ÀÎÀÌ °¡´ÉÇÕ´Ï´Ù.
-    // ¿¹½Ã :
-    // 10 = Character + Ground; Áö»ó À¯´Ö ÀÔ´Ï´Ù.
-    // »ç¿ëÇÒ ¼ö ¾ø´Â °ªÀ» ÀÔ·ÂÇÑ °æ¿ì ¿¹±âÁö ¸øÇÑ ¿À·ù°¡ »ı±æ ¼ö ÀÖ½À´Ï´Ù.
+    // ë˜ëŠ” ìœ ë‹›ì˜ ìƒíƒœì— ëŒ€í•´ì„œë„ ì„ ì–¸ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.
+    // ì˜ˆì‹œ :
+    // 10 = Character + Ground; ì§€ìƒ ìœ ë‹› ì…ë‹ˆë‹¤.
+    // ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ê°’ì„ ì…ë ¥í•œ ê²½ìš° ì˜ˆê¸°ì§€ ëª»í•œ ì˜¤ë¥˜ê°€ ìƒê¸¸ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
     [Flags]
     public enum State
     {
@@ -68,23 +70,31 @@ public class Unit : MonoBehaviour
         }
         else
         {
-
+            targetNexus = gameObject;
         }
 
         target = targetNexus.transform;
         tempTarget = target;
     }
 
-    public Vector3 TargetPosition
+    public Transform TargetTrans
     {
         get
         {
-            return target.position;
+            if (!target)
+                target = tempTarget;
+
+            return target;
+        }
+
+        set
+        {
+            target = value;
         }
     }
 
     public virtual Vector3? SeeingUnit()
     {
-        return null;
+        return new();
     }
 }

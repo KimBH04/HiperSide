@@ -4,20 +4,30 @@ using UnityEngine;
 
 public class UnitSpawn : MonoBehaviour
 {
-    public GameObject unit;
+    public GameObject ally;
+    public GameObject enemy;
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            ArmySpawn(ally, 0);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            ArmySpawn(enemy, 1);
+        }
+    }
+
+    void ArmySpawn(GameObject army, int isEnemy)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.collider.CompareTag("Ground"))
             {
-                if (hit.collider.CompareTag("Ground"))
-                {
-                    GameObject temp = Instantiate(unit, hit.point + new Vector3(0f, 1f), Quaternion.identity);
-                    /*temp.transform.position = hit.point + new Vector3(0f, 1f, 0f);*/
-                }
+                GameObject temp = Instantiate(army, hit.point + new Vector3(0f, 1f), Quaternion.Euler(0f, isEnemy * 180f, 0f));
             }
         }
     }

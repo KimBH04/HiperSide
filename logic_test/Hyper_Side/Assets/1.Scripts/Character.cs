@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,6 +10,7 @@ public class Character : Unit
 
     public float speed;
 
+    private SphereCollider sphere;
     private NavMeshAgent agent;
 
     void Awake()
@@ -19,36 +20,49 @@ public class Character : Unit
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
         agent.stoppingDistance = distance;
+
+        sphere = GetComponent<SphereCollider>();
+        sphere.radius = seeingDis;
     }
 
     void FixedUpdate()
     {
-        agent.destination = SeeingUnit() ?? TargetPosition;
+        agent.destination = SeeingUnit() ?? TargetTrans.position;
     }
 
     public override Vector3? SeeingUnit()
     {
         Vector3? r = null;
-        float minDis = seeingDis;
+        Vector3 tp = transform.position;
+        float dis = seeingDis * seeingDis;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, seeingDis);
+        Collider[] colliders = Physics.OverlapSphere(tp, distance);
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Ground") ||
-                collider.gameObject == gameObject ||
-                collider.GetComponent<Unit>().Sta == base.Sta ||
-                collider.gameObject.name.Equals("MyNexus"))
+            if (collider.CompareTag("Ground"))
                 continue;
 
             print(collider);
 
-            Vector3 pos = collider.transform.position;
-            float dis = Vector3.Distance(transform.position, pos);
+            Unit unit = collider.GetComponent<Unit>();
+            bool[] tar = new bool[4];
+            State state = unit.Sta & targetting;
 
-            if (minDis > dis)
+            for (int i = 0; i < 4; i++)
             {
-                minDis = dis;
-                r = pos;
+                tar[i] = ((int)state >> i) % 2 == 1;
+            }
+
+            if (!((tar[0] || tar[1]) && (tar[2] || tar[3])) || unit.Arm == base.Arm)
+                continue;
+
+            Vector3 collPos = collider.transform.position;
+            float collDis = Mathf.Abs(Vector3.SqrMagnitude(tp) - Vector3.SqrMagnitude(collPos));
+
+            if (collDis < dis)
+            {
+                dis = collDis;
+                r = collPos;
             }
         }
 

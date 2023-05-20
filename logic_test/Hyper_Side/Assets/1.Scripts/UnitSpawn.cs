@@ -7,6 +7,8 @@ public class UnitSpawn : MonoBehaviour
     public GameObject ally;
     public GameObject enemy;
 
+    public GameObject target;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -23,12 +25,16 @@ public class UnitSpawn : MonoBehaviour
     void ArmySpawn(GameObject army, int isEnemy)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.CompareTag("Ground"))
         {
-            if (hit.collider.CompareTag("Ground"))
-            {
-                GameObject temp = Instantiate(army, hit.point + new Vector3(0f, 1f), Quaternion.Euler(0f, isEnemy * 180f, 0f));
-            }
+            GameObject unit = Instantiate(army, hit.point + new Vector3(0f, 1f), Quaternion.Euler(0f, isEnemy * 180f, 0f));
+            GameObject temp = Instantiate(target, unit.transform.position + new Vector3(0f, 1f, isEnemy == 0 ? 26.5f : -26.5f), Quaternion.identity);
+            var tar = temp.GetComponent<Target>();
+
+            unit.GetComponent<Unit>().SetTarget(temp);
+
+            tar.SetUnit(unit);
+            tar.SetIsEnemy(isEnemy == 1);
         }
     }
 }

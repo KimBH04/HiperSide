@@ -5,12 +5,11 @@ using UnityEngine.AI;
 
 public class Character : Unit
 {
-    [Range(.1f, 20f)]
+    [Range(.1f, 50f)]
     public float seeingDis = 1f;
 
     public float speed;
 
-    private SphereCollider sphere;
     private NavMeshAgent agent;
 
     void Awake()
@@ -20,14 +19,17 @@ public class Character : Unit
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
         agent.stoppingDistance = distance;
-
-        sphere = GetComponent<SphereCollider>();
-        sphere.radius = seeingDis;
     }
 
     void FixedUpdate()
     {
-        agent.destination = SeeingUnit() ?? TargetTrans.position;
+        agent.destination = SeeingUnit() ?? target.position;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, seeingDis);
     }
 
     public override Vector3? SeeingUnit()

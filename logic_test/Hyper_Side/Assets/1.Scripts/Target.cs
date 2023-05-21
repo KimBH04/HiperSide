@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    private Vector3 unit;
+    private Transform unit;
     private bool isEnemy;
 
     void FixedUpdate()
     {
-        transform.position = new(unit.x, transform.position.y, isEnemy ? -26.5f : 26.5f);
+        transform.position = new(unit.position.x, transform.position.y, isEnemy ? -30f : 30f);
     }
 
     public void SetUnit(GameObject @object)
     {
-        unit = @object.transform.position;
+        unit = @object.transform;
     }
 
     public void SetIsEnemy(bool isEnemy)

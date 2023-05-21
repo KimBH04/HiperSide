@@ -31,7 +31,7 @@ public enum Army
 public class Unit : MonoBehaviour
 {
     [SerializeField]
-    private Army army;
+    protected Army army;
     [SerializeField]
     private State state;
     [SerializeField]

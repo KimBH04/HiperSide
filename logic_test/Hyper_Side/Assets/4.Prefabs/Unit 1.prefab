@@ -119,7 +119,7 @@ MonoBehaviour:
   delay: 0
   firstDelay: 0
   lastDelay: 0
-  distance: 1
+  distance: 3.5
   seeingDis: 10
   speed: 3
 --- !u!195 &1264638174
@@ -143,4 +143,4 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 4

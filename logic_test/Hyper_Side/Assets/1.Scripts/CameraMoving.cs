@@ -4,21 +4,9 @@ using UnityEngine;
 
 public class CameraMoving : MonoBehaviour
 {
-    public Transform cam;
-
-    private float clickPoint;
-
-    void Awake()
+    public void Move(float position)
     {
-
-    }
-
-    void FixedUpdate()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            clickPoint = Input.mousePosition.x;
-
-        }
+        position -= .5f;
+        transform.position = new Vector3(position * 50f, 10f, -20f);
     }
 }

@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 873157758}
   - component: {fileID: 873157757}
   - component: {fileID: 873157756}
+  - component: {fileID: 873157760}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -224,6 +225,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &873157760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873157755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a76243e80d9ca41960cac7d2eb5d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &965504828
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +321,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1894708892}
+      - m_Target: {fileID: 873157760}
         m_TargetAssemblyTypeName: GameScenesMove, Assembly-CSharp
         m_MethodName: GameScenesCtrl
         m_Mode: 1

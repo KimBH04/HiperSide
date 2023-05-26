@@ -150,8 +150,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309931506}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: 4.5}
-  m_LocalScale: {x: 40, y: 10, z: 5}
+  m_LocalPosition: {x: 0, y: -3, z: 9.2}
+  m_LocalScale: {x: 40, y: 10, z: 6.4025}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1015502497}
@@ -692,8 +692,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984584534}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.5, z: 0}
-  m_LocalScale: {x: 40, y: 10, z: 4}
+  m_LocalPosition: {x: 0, y: -4.7, z: -0.89}
+  m_LocalScale: {x: 40, y: 10, z: 6.9828}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1015502497}
@@ -723,7 +723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015502496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -28.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -839,7 +839,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camPos: {fileID: 1624059853}
-  units:
+  unitCards:
+  - {fileID: 7744884992613515046, guid: 8d500c599a1204241a857d0fe1e29390, type: 3}
+  - {fileID: 7744884992613515046, guid: 8d500c599a1204241a857d0fe1e29390, type: 3}
   - {fileID: 7744884992613515046, guid: 8d500c599a1204241a857d0fe1e29390, type: 3}
   - {fileID: 7744884992613515046, guid: 8d500c599a1204241a857d0fe1e29390, type: 3}
   - {fileID: 7744884992613515046, guid: 8d500c599a1204241a857d0fe1e29390, type: 3}
@@ -990,8 +992,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795304893}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -6, z: -3.25}
-  m_LocalScale: {x: 40, y: 10, z: 2.5}
+  m_LocalPosition: {x: 0, y: -6, z: -10.68}
+  m_LocalScale: {x: 40, y: 10, z: 7.308606}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1015502497}

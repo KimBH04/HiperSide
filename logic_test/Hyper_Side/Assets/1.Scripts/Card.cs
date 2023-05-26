@@ -8,6 +8,9 @@ public class Card : MonoBehaviour
     public delegate void UnitSpawningHandler(GameObject unit, int wayIndex);
     public static event UnitSpawningHandler OnUnitSpawning;
 
+    public delegate void DeckDrawingHandler();
+    public static event DeckDrawingHandler OnDeckDrawing;
+
     public GameObject unit;
 
     Material mat;
@@ -36,16 +39,20 @@ public class Card : MonoBehaviour
         {
             Debug.Log("3");
             OnUnitSpawning(unit, 2);
+            OnDeckDrawing();
         }
         else if (z > 1.4f)
         {
             Debug.Log("2");
             OnUnitSpawning(unit, 1);
+            OnDeckDrawing();
         }
         else if (z > 0.7f)
         {
             Debug.Log("1");
+            
             OnUnitSpawning(unit, 0);
+            OnDeckDrawing();
         }
         else
         {

@@ -8,10 +8,17 @@ public class Card : MonoBehaviour
     public delegate void UnitSpawningHandler(GameObject unit, int wayIndex);
     public static event UnitSpawningHandler OnUnitSpawning;
 
-    public delegate void DeckDrawingHandler();
+    public delegate void DeckDrawingHandler(int idx);
     public static event DeckDrawingHandler OnDeckDrawing;
 
     public GameObject unit;
+
+    private int cardIndex;
+
+    public int CardIndex
+    {
+        set => cardIndex = value;
+    }
 
     Material mat;
     Vector3 defaultPos;
@@ -35,30 +42,39 @@ public class Card : MonoBehaviour
     void OnMouseUp()
     {
         float z = transform.localPosition.z;
-        if (z > 2.1f)
+        if (z < 2.2f)
         {
-            Debug.Log("3");
-            OnUnitSpawning(unit, 2);
-            OnDeckDrawing();
+            if (z > 1.7f)
+            {
+                Debug.Log("3");
+
+                OnUnitSpawning(unit, 2);
+                OnDeckDrawing(cardIndex);
+                Destroy(gameObject);
+                return;
+            }
+            else if (z > 1.1f)
+            {
+                Debug.Log("2");
+
+                OnUnitSpawning(unit, 1);
+                OnDeckDrawing(cardIndex);
+                Destroy(gameObject);
+                return;
+            }
+            else if (z > 0.5f)
+            {
+                Debug.Log("1");
+
+                OnUnitSpawning(unit, 0);
+                OnDeckDrawing(cardIndex);
+                Destroy(gameObject);
+                return;
+            }
         }
-        else if (z > 1.4f)
-        {
-            Debug.Log("2");
-            OnUnitSpawning(unit, 1);
-            OnDeckDrawing();
-        }
-        else if (z > 0.7f)
-        {
-            Debug.Log("1");
-            
-            OnUnitSpawning(unit, 0);
-            OnDeckDrawing();
-        }
-        else
-        {
-            transform.DOLocalMove(defaultPos, 0.3f).SetEase(Ease.OutExpo);
-            //transform.localPosition = defaultPos;
-            mat.color = new Color(1, 1, 1, 1);
-        }
+
+        transform.DOLocalMove(defaultPos, 0.3f).SetEase(Ease.OutExpo);
+        //transform.localPosition = defaultPos;
+        mat.color = new Color(1, 1, 1, 1);
     }
 }

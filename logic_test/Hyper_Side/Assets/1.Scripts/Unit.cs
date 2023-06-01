@@ -11,7 +11,6 @@ public enum State
 public class Unit : MonoBehaviour
 {
     public bool isEnemy;
-
     bool isDie;
 
     [Header("status")]
@@ -24,56 +23,75 @@ public class Unit : MonoBehaviour
 
     public float delay = 2f;
 
+    public Transform pivot;
+
     State state;
+
+    private Animator anime;
+    private readonly int hashWalk = Animator.StringToHash("isWalking");
 
     void Start()
     {
+        anime = GetComponent<Animator>();
         state = State.WALK;
-        StartCoroutine(Statement());
+        StartCoroutine(CheckingStatement());
     }
 
     void Update()
     {
-
+        if (state == State.DIE)
+            return;
 
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, distance))
         {
             Unit unit = hit.transform.GetComponent<Unit>();
             if (unit.isEnemy != isEnemy)
             {
-
+                state = State.ATTACK;
+                unit.Damage(damage);
             }
         }
 
-        Debug.DrawRay(transform.position, Vector3.forward, Color.red);
+        if (state == State.WALK)
+        {
+            transform.position += speed * Time.deltaTime * new Vector3(isEnemy ? -1 : 1, 0f);
+        }
+
+        Debug.DrawRay(pivot.position, new Vector3(distance, 0f, 0f), Color.red);
     }
 
-    void Hit(int damage)
+    void Damage(int damage)
     {
         hp -= damage;
         if (hp <= 0)
         {
-            Destroy(gameObject);
+            isDie = true;
+            state = State.DIE;
+            Destroy(gameObject, 1f);
         }
     }
 
-    IEnumerator Statement()
+    IEnumerator CheckingStatement()
     {
         while (!isDie)
         {
             switch (state)
             {
                 case State.WALK:
+                    anime.SetBool(hashWalk, true);
                     break;
 
                 case State.ATTACK:
+                    anime.SetBool(hashWalk, false);
                     break;
 
                 case State.DIE:
+                    isDie = true;
+
                     break;
             }
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

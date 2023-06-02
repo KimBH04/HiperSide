@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraMoving : MonoBehaviour
 {
+    public GameObject way;
     public float maxPosition;
     void Start()
     {
@@ -13,9 +14,6 @@ public class CameraMoving : MonoBehaviour
     public void Move(float position)
     {
         position -= .5f;
-        transform.position = new Vector3(
-            position * maxPosition,
-            transform.position.y,
-            transform.position.z);
+        transform.position = new Vector3(position * (way.transform.lossyScale.x - 20f), transform.position.y, transform.position.z);
     }
 }

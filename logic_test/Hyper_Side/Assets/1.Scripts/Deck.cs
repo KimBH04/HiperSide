@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    public Transform camPos;
+    public Vector3 pos;
+
+    public Transform cam;
     public List<GameObject> unitCards;
     public Queue<GameObject> unitQueue;
 
-    private GameObject[] deck = new GameObject[4];
+    private readonly GameObject[] deck = new GameObject[4];
 
     void Start()
     {
+        transform.eulerAngles = cam.eulerAngles;
+
         unitQueue = new();
         Card.OnDeckDrawing += Draw;
 
@@ -31,13 +35,13 @@ public class Deck : MonoBehaviour
 
     void Update()
     {
-        transform.position = camPos.position + new Vector3(0f, -5f, 4f);
+        transform.position = cam.position + pos;
     }
 
     void Draw(int i)
     {
         int idx = Random.Range(0, unitCards.Count);
-        deck[i] = Instantiate(unitCards[idx], transform.position + new Vector3(i * 1.7f, -1f), Quaternion.Euler(30f, 0, 0));
+        deck[i] = Instantiate(unitCards[idx], transform.position + new Vector3(i * 1.7f, -1f), Quaternion.Euler(cam.eulerAngles.x, 0f, 180f));
         deck[i].transform.parent = transform;
         deck[i].GetComponent<Card>().CardIndex = i;
 

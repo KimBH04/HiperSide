@@ -5,10 +5,12 @@ using UnityEngine;
 public class UnitSpawnController : MonoBehaviour
 {
     public Transform[] spawnTrans = new Transform[3];
+    public GameObject area;
 
     void Awake()
     {
         Card.OnUnitSpawning += UnitSpawning;
+        Card.OnCardHolding += area.SetActive;
     }
 
     void UnitSpawning(GameObject unit, int wayIndex)

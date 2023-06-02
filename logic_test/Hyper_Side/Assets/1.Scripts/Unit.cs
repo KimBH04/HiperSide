@@ -42,23 +42,24 @@ public class Unit : MonoBehaviour
         if (state == State.DIE)
             return;
 
-        if (Physics.Raycast(transform.position, new Vector3(distance, 0f, 0f), out RaycastHit hit, distance))
+        if (Physics.Raycast(transform.position, new Vector3(1f, 0f, 0f), out RaycastHit hit, distance))
         {
-            Debug.Log(hit.transform.name);
-            Unit unit = hit.transform.GetComponent<Unit>();
-            if (unit.isEnemy != isEnemy)
+            if (hit.transform.CompareTag("UNIT"))
             {
-                state = State.ATTACK;
-                unit.Damage(damage);
+                Unit unit = hit.transform.GetComponent<Unit>();
+                if (unit.isEnemy != isEnemy)
+                {
+                    state = State.ATTACK;
+                    unit.Damage(damage);
+                }
             }
         }
+        Debug.DrawRay(pivot.position, new Vector3(distance, 0f, 0f), Color.red);
 
         if (state == State.WALK)
         {
             transform.position += speed * Time.deltaTime * new Vector3(isEnemy ? -1 : 1, 0f);
         }
-
-        Debug.DrawRay(pivot.position, new Vector3(distance, 0f, 0f), Color.red);
     }
 
     void Damage(int damage)

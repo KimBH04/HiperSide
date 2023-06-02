@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitSpawnController : MonoBehaviour
 {
-    public Vector3[] spawnPos = new Vector3[3];
+    public Transform[] spawnTrans = new Transform[3];
 
     void Awake()
     {
@@ -13,6 +13,6 @@ public class UnitSpawnController : MonoBehaviour
 
     void UnitSpawning(GameObject unit, int wayIndex)
     {
-        Instantiate(unit, spawnPos[wayIndex], Quaternion.Euler(0f, 90f, 0f));
+        Instantiate(unit, spawnTrans[wayIndex].position, Quaternion.Euler(0f, 90f, 0f));
     }
 }

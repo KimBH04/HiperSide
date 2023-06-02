@@ -42,8 +42,9 @@ public class Unit : MonoBehaviour
         if (state == State.DIE)
             return;
 
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, distance))
+        if (Physics.Raycast(transform.position, new Vector3(distance, 0f, 0f), out RaycastHit hit, distance))
         {
+            Debug.Log(hit.transform.name);
             Unit unit = hit.transform.GetComponent<Unit>();
             if (unit.isEnemy != isEnemy)
             {

@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
     public Transform camPos;
     public List<GameObject> unitCards;
-
-    private Queue<GameObject> unitQueue;
+    public Queue<GameObject> unitQueue;
 
     private GameObject[] deck = new GameObject[4];
 

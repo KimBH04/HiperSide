@@ -12,6 +12,7 @@ public class Card : MonoBehaviour
     public static event DeckDrawingHandler OnDeckDrawing;
 
     public GameObject unit;
+    private Deck deck;
 
     private int cardIndex;
 
@@ -25,6 +26,7 @@ public class Card : MonoBehaviour
 
     void Start()
     {
+        deck = GetComponentInParent<Deck>();
         mat = GetComponent<MeshRenderer>().materials[0];
         defaultPos = transform.localPosition;
     }
@@ -36,39 +38,33 @@ public class Card : MonoBehaviour
 
         mat.color = new Color(1, 1, 1, 0.34f);
 
-        //Debug.Log(m.ToString());
+        Debug.Log(m.ToString());
     }
 
     void OnMouseUp()
     {
         float z = transform.localPosition.z;
-        if (z < 2.2f)
+        if (z < 2.5f)
         {
-            if (z > 1.7f)
+            if (z > 1.9f)
             {
                 Debug.Log("3");
 
-                OnUnitSpawning(unit, 2);
-                OnDeckDrawing(cardIndex);
-                Destroy(gameObject);
+                ThrowCard(2);
                 return;
             }
-            else if (z > 1.1f)
+            else if (z > 1.3f)
             {
                 Debug.Log("2");
 
-                OnUnitSpawning(unit, 1);
-                OnDeckDrawing(cardIndex);
-                Destroy(gameObject);
+                ThrowCard(1);
                 return;
             }
-            else if (z > 0.5f)
+            else if (z > 0.7f)
             {
                 Debug.Log("1");
 
-                OnUnitSpawning(unit, 0);
-                OnDeckDrawing(cardIndex);
-                Destroy(gameObject);
+                ThrowCard(0);
                 return;
             }
         }
@@ -76,5 +72,15 @@ public class Card : MonoBehaviour
         transform.DOLocalMove(defaultPos, 0.3f).SetEase(Ease.OutExpo);
         //transform.localPosition = defaultPos;
         mat.color = new Color(1, 1, 1, 1);
+    }
+
+    void ThrowCard(int idx)
+    {
+        GameObject card = Resources.Load<GameObject>("card");
+
+        deck.unitQueue.Enqueue(card);
+        OnUnitSpawning(unit, idx);
+        OnDeckDrawing(cardIndex);
+        Destroy(gameObject);
     }
 }

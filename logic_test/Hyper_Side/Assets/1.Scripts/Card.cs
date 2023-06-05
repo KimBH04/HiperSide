@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Card : MonoBehaviour
 {
-    public delegate void UnitSpawningHandler(GameObject unit, int wayIndex);
+    public delegate void UnitSpawningHandler(GameObject unit, int wayIndex, bool isEenemy);
     public static event UnitSpawningHandler OnUnitSpawning;
 
     public delegate void DeckDrawingHandler(int idx);
@@ -84,7 +84,7 @@ public class Card : MonoBehaviour
         GameObject card = Resources.Load<GameObject>("card");
 
         deck.unitQueue.Enqueue(card);
-        OnUnitSpawning(unit, idx);
+        OnUnitSpawning(unit, idx, false);
         OnDeckDrawing(cardIndex);
         Destroy(gameObject);
     }

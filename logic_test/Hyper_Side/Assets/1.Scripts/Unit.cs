@@ -11,7 +11,7 @@ public enum State
 public class Unit : MonoBehaviour
 {
     public bool isEnemy;
-    bool isDie;
+    public bool isDie;
 
     [Header("status")]
     public int hp = 10;
@@ -29,6 +29,7 @@ public class Unit : MonoBehaviour
 
     private Animator anime;
     private readonly int hashWalk = Animator.StringToHash("isWalking");
+    private readonly int hashAttack = Animator.StringToHash("isAttack");
 
     void Start()
     {
@@ -51,10 +52,13 @@ public class Unit : MonoBehaviour
                 {
                     state = State.ATTACK;
                     unit.Damage(damage);
+                    goto here;
                 }
             }
         }
-        Debug.DrawRay(pivot.position, new Vector3(distance, 0f, 0f), Color.red);
+        state = State.WALK;
+    here:;
+        Debug.DrawRay(pivot.position, new Vector3(distance * (isEnemy ? -1 : 1), 0f, 0f), Color.red);
 
         if (state == State.WALK)
         {
@@ -62,7 +66,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    void Damage(int damage)
+    public void Damage(int damage)
     {
         hp -= damage;
         if (hp <= 0)
@@ -81,15 +85,18 @@ public class Unit : MonoBehaviour
             {
                 case State.WALK:
                     anime.SetBool(hashWalk, true);
+                    anime.SetBool(hashAttack, false);
                     break;
 
                 case State.ATTACK:
                     anime.SetBool(hashWalk, false);
+                    anime.SetBool(hashAttack, true);
                     break;
 
                 case State.DIE:
                     isDie = true;
-
+                    anime.SetBool(hashWalk, false);
+                    anime.SetBool(hashAttack, false);
                     break;
             }
 

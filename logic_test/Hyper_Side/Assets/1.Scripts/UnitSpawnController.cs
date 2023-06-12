@@ -15,6 +15,8 @@ public class UnitSpawnController : MonoBehaviour
 
     public void UnitSpawning(GameObject unit, int wayIndex, bool isEnemy)
     {
-        Instantiate(unit, spawnTrans[wayIndex + (isEnemy ? 3 : 0)].position, Quaternion.Euler(0f, (isEnemy ? -1 : 1) * 90f, 0f));
+        GameObject temp = Instantiate(unit, spawnTrans[wayIndex + (isEnemy ? 3 : 0)].position, Quaternion.Euler(0f, (isEnemy ? -1 : 1) * 90f, 0f));
+        temp.GetComponent<Unit>().linetype = (LINETYPE)wayIndex;
+        Debug.Log(wayIndex);
     }
 }

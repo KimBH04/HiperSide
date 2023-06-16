@@ -15,7 +15,6 @@ public enum LINETYPE
     LINE3
 }
 
-
 public class Unit : MonoBehaviour
 {
     public bool isEnemy;
@@ -48,6 +47,7 @@ public class Unit : MonoBehaviour
 
     void Start()
     {
+
         temp1 = delay;
         anime = GetComponent<Animator>();
         state = State.WALK;
@@ -134,7 +134,7 @@ public class Unit : MonoBehaviour
             }
         }
 
-    here:;
+    here:
         Debug.DrawRay(pivot.position, new Vector3(distance * (isEnemy ? -1 : 1), 0f, 0f), Color.red);
 
         if (state == State.WALK)

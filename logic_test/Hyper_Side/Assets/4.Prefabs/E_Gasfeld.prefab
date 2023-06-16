@@ -439,7 +439,8 @@ MonoBehaviour:
   damage: 2
   speed: 3
   distance: 10
-  delay: 2
+  firstDelay: 0
+  lastDelay: 0
   pivot: {fileID: 8031722607104748525}
   state: 0
   linetype: 0

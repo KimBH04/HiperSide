@@ -15,13 +15,16 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI ally_hp;
     public TextMeshProUGUI enemy_hp;
 
-    private static GameObject endPanel;
+    static AudioSource background;
+    static GameObject endPanel;
 
-    private static GameObject victoryImg;
-    private static GameObject loseImg;
+    static GameObject victoryImg;
+    static GameObject loseImg;
 
     void Start()
     {
+        background = GetComponent<AudioSource>();
+
         endPanel = GameObject.Find("EndPanel");
 
         victoryImg = GameObject.Find("v");
@@ -32,6 +35,8 @@ public class GameManager : MonoBehaviour
         loseImg.SetActive(false);
 
         Nexus.GameEnd += GameEnd;
+
+        background.Play();
     }
 
     void Update()
@@ -60,5 +65,7 @@ public class GameManager : MonoBehaviour
         }
         endPanel.SetActive(true);
         GameOver(isVictory);
+
+        background.Stop();
     }
 }

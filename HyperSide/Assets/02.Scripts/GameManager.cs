@@ -60,11 +60,6 @@ public class GameManager : MonoBehaviour
     void GameEnd(bool isVictory)
     {
         isPlaying = false;
-        /*
-         * 여기다 게임 끝났을 때 동작할 코드 작성하세요
-         * victory lose 어쩌구 그거
-         * DG.Tweening 임포트 해놨으니 예쁘게 쓰세요 ^^
-         */
 
         if (isVictory)
         {

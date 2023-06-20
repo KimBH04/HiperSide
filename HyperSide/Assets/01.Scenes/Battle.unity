@@ -1718,7 +1718,7 @@ PrefabInstance:
     - target: {fileID: 236387699613727853, guid: 5c4ce70e4b2a61345936c63c276908bf, type: 3}
       propertyPath: m_Texture
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2800000, guid: 40674f285eed72e46bba553e80dc9cd0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c4ce70e4b2a61345936c63c276908bf, type: 3}
 --- !u!224 &1013918971 stripped
@@ -2081,7 +2081,7 @@ PrefabInstance:
     - target: {fileID: 236387699613727853, guid: 5c4ce70e4b2a61345936c63c276908bf, type: 3}
       propertyPath: m_Texture
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2800000, guid: 2f249decd6e05fe4eafec1755fab7f75, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c4ce70e4b2a61345936c63c276908bf, type: 3}
 --- !u!224 &1245948682 stripped
@@ -2285,7 +2285,7 @@ PrefabInstance:
     - target: {fileID: 236387699613727853, guid: 5c4ce70e4b2a61345936c63c276908bf, type: 3}
       propertyPath: m_Texture
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2800000, guid: 0ac7c2e7b538e5147adf8f0d11db53b2, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c4ce70e4b2a61345936c63c276908bf, type: 3}
 --- !u!224 &1308496677 stripped
@@ -3769,6 +3769,6 @@ PrefabInstance:
     - target: {fileID: 236387699613727853, guid: 5c4ce70e4b2a61345936c63c276908bf, type: 3}
       propertyPath: m_Texture
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2800000, guid: cc60638bbb9ac5d42a5af4978c3fc27a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c4ce70e4b2a61345936c63c276908bf, type: 3}

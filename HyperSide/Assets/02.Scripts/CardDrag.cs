@@ -17,6 +17,8 @@ public class CardDrag : MonoBehaviour, IDragHandler, IEndDragHandler
     public Image delayPanel;
     public TextMeshProUGUI delayTxt;
 
+    static GameManager manager;
+
     float spawnDelayTime;
     float screenHeight;
 
@@ -24,6 +26,7 @@ public class CardDrag : MonoBehaviour, IDragHandler, IEndDragHandler
 
     void Awake()
     {
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnDelayTime = unit.GetComponent<Unit>().spawnDelay;
     }
 
@@ -53,8 +56,8 @@ public class CardDrag : MonoBehaviour, IDragHandler, IEndDragHandler
     //UI 드래그하는 동안 호출
     public void OnDrag(PointerEventData eventData)
     {
-        // fillAmount가 0보다 크면 드래그 X
-        if (delayPanel.fillAmount > 0)
+        // fillAmount가 0보다 크거나 게임이 끝나면 드래그 X
+        if (delayPanel.fillAmount > 0 || !manager.isPlaying)
             return;
 
         transform.position = eventData.position;
@@ -64,23 +67,23 @@ public class CardDrag : MonoBehaviour, IDragHandler, IEndDragHandler
     //UI 드래그 끝났을 때 호출
     public void OnEndDrag(PointerEventData eventData)
     {
-        // fillAmount가 0보다 크면 드래그 X
-        if (delayPanel.fillAmount > 0)
-            return;
-
-        float y = eventData.position.y;
-        //Debug.Log($"{y} {screenHeight}");
-        if (y > screenHeight * 0.75f)
+        // fillAmount가 0보다 크거나 게임이 끝나면 드래그 X
+        if (!(delayPanel.fillAmount > 0 || !manager.isPlaying))
         {
-            CardDown(2);
-        }
-        else if (y > screenHeight * 0.5f)
-        {
-            CardDown(1);
-        }
-        else if (y > screenHeight * 0.25f)
-        {
-            CardDown(0);
+            float y = eventData.position.y;
+            //Debug.Log($"{y} {screenHeight}");
+            if (y > screenHeight * 0.75f)
+            {
+                CardDown(2);
+            }
+            else if (y > screenHeight * 0.5f)
+            {
+                CardDown(1);
+            }
+            else if (y > screenHeight * 0.25f)
+            {
+                CardDown(0);
+            }
         }
 
         //제자리에 돌아가기

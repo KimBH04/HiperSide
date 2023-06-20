@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,8 +13,13 @@ public class GameManager : MonoBehaviour
     public Nexus allyNexus;
     public Nexus enemyNexus;
 
-    public TextMeshProUGUI ally_hp;
-    public TextMeshProUGUI enemy_hp;
+    public TextMeshProUGUI ally_hp_txt;
+    public TextMeshProUGUI enemy_hp_txt;
+    public Image ally_hp;
+    public Image enemy_hp;
+
+    private float allyFullHP;
+    private float enemyFullHP;
 
     static AudioSource background;
     static GameObject endPanel;
@@ -23,6 +29,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        allyFullHP = allyNexus.hp;
+        enemyFullHP = enemyNexus.hp;
+
         background = GetComponent<AudioSource>();
 
         endPanel = GameObject.Find("EndPanel");
@@ -41,8 +50,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        ally_hp.text = $"{(allyNexus.hp > 0 ? allyNexus.hp : 0)}";
-        enemy_hp.text = $"{(enemyNexus.hp > 0 ? enemyNexus.hp : 0)}";
+        ally_hp_txt.text = $"{(allyNexus.hp > 0 ? allyNexus.hp : 0)}";
+        enemy_hp_txt.text = $"{(enemyNexus.hp > 0 ? enemyNexus.hp : 0)}";
+
+        ally_hp.fillAmount = (allyNexus.hp > 0 ? allyNexus.hp : 0) / allyFullHP;
+        enemy_hp.fillAmount = (enemyNexus.hp > 0 ? enemyNexus.hp : 0) / enemyFullHP;
     }
 
     void GameEnd(bool isVictory)

@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class SceneChanger : MonoBehaviour
 {
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     public void Stage(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
